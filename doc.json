@@ -1,1 +1,234 @@
-
+{
+  "doctors": [
+    {
+      "id": 1,
+      "name": "د. أحمد محمود",
+      "specialty": "أمراض القلب",
+      "phone": "01012345678",
+      "governorate": "القاهرة",
+      "location": "حي المهندسين، برج الأطباء، الدور الثالث",
+      "image": "https://randomuser.me/api/portraits/men/1.jpg",
+      "schedule": {
+        "الأحد": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "04:00 م"
+        },
+        "الإثنين": {
+          "available": true,
+          "from": "09:00 ص",
+          "to": "03:00 م"
+        },
+        "الثلاثاء": {
+          "available": false
+        },
+        "الأربعاء": {
+          "available": true,
+          "from": "11:00 ص",
+          "to": "07:00 م"
+        },
+        "الخميس": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "02:00 م"
+        },
+        "الجمعة": {
+          "available": false
+        },
+        "السبت": {
+          "available": true,
+          "from": "12:00 م",
+          "to": "06:00 م"
+        }
+      },
+      "rating": 4.8,
+      "experience": 15,
+      "price": 300,
+      "bio": "استشاري أمراض القلب والقسطرة العلاجية، حاصل على الدكتوراه من جامعة القاهرة وعضو الجمعية الأوروبية لأمراض القلب."
+    },
+    {
+      "id": 2,
+      "name": "د. منى السيد",
+      "specialty": "الأطفال",
+      "phone": "01123456789",
+      "governorate": "الإسكندرية",
+      "location": "حي سموحة، عيادات الشروق، الدور الأول",
+      "image": "https://randomuser.me/api/portraits/women/2.jpg",
+      "schedule": {
+        "الأحد": {
+          "available": true,
+          "from": "01:00 م",
+          "to": "08:00 م"
+        },
+        "الإثنين": {
+          "available": false
+        },
+        "الثلاثاء": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "04:00 م"
+        },
+        "الأربعاء": {
+          "available": true,
+          "from": "09:00 ص",
+          "to": "03:00 م"
+        },
+        "الخميس": {
+          "available": true,
+          "from": "11:00 ص",
+          "to": "07:00 م"
+        },
+        "الجمعة": {
+          "available": false
+        },
+        "السبت": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "02:00 م"
+        }
+      },
+      "rating": 4.9,
+      "experience": 12,
+      "price": 250,
+      "bio": "استشارية طب الأطفال وحديثي الولادة، حاصلة على الماجستير من جامعة الإسكندرية، متخصصة في التغذية العلاجية للأطفال."
+    },
+    {
+      "id": 3,
+      "name": "د. عمرو عبد الله",
+      "specialty": "العظام",
+      "phone": "01234567890",
+      "governorate": "الجيزة",
+      "location": "حي الدقي، مركز الطبي المتميز، الدور الرابع",
+      "image": "https://randomuser.me/api/portraits/men/3.jpg",
+      "schedule": {
+        "الأحد": {
+          "available": false
+        },
+        "الإثنين": {
+          "available": true,
+          "from": "09:00 ص",
+          "to": "03:00 م"
+        },
+        "الثلاثاء": {
+          "available": true,
+          "from": "11:00 ص",
+          "to": "07:00 م"
+        },
+        "الأربعاء": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "04:00 م"
+        },
+        "الخميس": {
+          "available": false
+        },
+        "الجمعة": {
+          "available": true,
+          "from": "12:00 م",
+          "to": "06:00 م"
+        },
+        "السبت": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "02:00 م"
+        }
+      },
+      "rating": 4.7,
+      "experience": 10,
+      "price": 350,
+      "bio": "استشاري جراحة العظام والمفاصل، متخصص في جراحات العمود الفقري والمناظير، حاصل على الزمالة الألمانية في جراحات العظام."
+    },
+    {
+      "id": 4,
+      "name": "د. هناء رشدي",
+      "specialty": "الجلدية",
+      "phone": "01567890123",
+      "governorate": "الغربية",
+      "location": "حي أول، مستشفى الجامعة، عيادات الجلدية",
+      "image": "https://randomuser.me/api/portraits/women/4.jpg",
+      "schedule": {
+        "الأحد": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "02:00 م"
+        },
+        "الإثنين": {
+          "available": true,
+          "from": "12:00 م",
+          "to": "06:00 م"
+        },
+        "الثلاثاء": {
+          "available": false
+        },
+        "الأربعاء": {
+          "available": true,
+          "from": "09:00 ص",
+          "to": "03:00 م"
+        },
+        "الخميس": {
+          "available": true,
+          "from": "11:00 ص",
+          "to": "07:00 م"
+        },
+        "الجمعة": {
+          "available": false
+        },
+        "السبت": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "04:00 م"
+        }
+      },
+      "rating": 4.6,
+      "experience": 8,
+      "price": 400,
+      "bio": "استشارية الأمراض الجلدية والتجميل والليزر، حاصلة على الدكتوراه من جامعة طنطا، متخصصة في علاج البهاق والأمراض الجلدية المزمنة."
+    },
+    {
+      "id": 5,
+      "name": "د. خالد سعد",
+      "specialty": "العيون",
+      "phone": "01098765432",
+      "governorate": "الدقهلية",
+      "location": "حي الجامعة، مركز العيون التخصصي",
+      "image": "https://randomuser.me/api/portraits/men/5.jpg",
+      "schedule": {
+        "الأحد": {
+          "available": true,
+          "from": "11:00 ص",
+          "to": "07:00 م"
+        },
+        "الإثنين": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "04:00 م"
+        },
+        "الثلاثاء": {
+          "available": false
+        },
+        "الأربعاء": {
+          "available": true,
+          "from": "09:00 ص",
+          "to": "03:00 م"
+        },
+        "الخميس": {
+          "available": true,
+          "from": "12:00 م",
+          "to": "06:00 م"
+        },
+        "الجمعة": {
+          "available": false
+        },
+        "السبت": {
+          "available": true,
+          "from": "10:00 ص",
+          "to": "02:00 م"
+        }
+      },
+      "rating": 4.9,
+      "experience": 20,
+      "price": 500,
+      "bio": "أستاذ طب وجراحة العيون، متخصص في جراحات المياه البيضاء والزرقاء وتصحيح الإبصار بالليزر، حاصل على الزمالة البريطانية في طب العيون."
+    }
+  ]
+}
