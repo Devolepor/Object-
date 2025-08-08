@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة تحميل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        
+        .loading-container {
+            text-align: center;
+            position: relative;
+            width: 300px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .logo img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ffffff, #e0e0e0);
+            border-radius: 10px;
+            animation: load 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        @keyframes load {
+            0% { width: 0; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0.6;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(-10px); opacity: 1; }
+        }
+        
+        .percentage {
+            color: white;
+            font-size: 1rem;
+            margin-top: 10px;
+            font-weight: 300;
+            animation: count 3s linear infinite;
+        }
+        
+        @keyframes count {
+            0% { content: "0%"; }
+            10% { content: "10%"; }
+            20% { content: "25%"; }
+            30% { content: "38%"; }
+            40% { content: "45%"; }
+            50% { content: "60%"; }
+            60% { content: "72%"; }
+            70% { content: "85%"; }
+            80% { content: "90%"; }
+            90%, 100% { content: "100%"; }
+        }
+        
+        .spinner {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            border: 3px solid transparent;
+            border-top-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: spin 5s linear infinite;
+            z-index: -1;
+        }
+        
+        .spinner:nth-child(2) {
+            top: -70px;
+            left: -70px;
+            width: 240px;
+            height: 240px;
+            border-top-color: rgba(255, 255, 255, 0.2);
+            animation-duration: 7s;
+            animation-direction: reverse;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner"></div>
+    <div class="spinner"></div>
+    
+    <div class="loading-container">
+        <div class="logo">
+            <!-- يمكنك استبدال هذا بالشعار الخاص بك -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3142/3142027.png" alt="شعار التحميل">
+        </div>
+        
+        <h1 class="loading-text">جاري التحميل...</h1>
+        
+        <div class="loading-bar">
+            <div class="progress"></div>
+        </div>
+        
+        <div class="percentage">0%</div>
+        
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    
+    <script>
+        // لتحديث النسبة المئوية
+        const percentageElement = document.querySelector('.percentage');
+        let percent = 0;
+        
+        const interval = setInterval(() => {
+            percent += 1;
+            percentageElement.textContent = percent + '%';
+            
+            if (percent >= 100) {
+                clearInterval(interval);
+                // يمكنك إضافة تحويل إلى صفحة أخرى هنا عند اكتمال التحميل
+                 window.location.href = "app.html";
+            }
+        }, 30);
+    </script>
+</body>
+</html>

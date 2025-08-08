@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يومي - تنظيم الوقت والصحة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a5acd;
+            --secondary-color: #9370db;
+            --accent-color: #ff7eb9;
+            --dark-color: #2e2d4d;
+            --light-color: #f8f9fa;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --health-color: #4fc3f7;
+            --balance-color: #ba68c8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            background-image: url('https://i.imgur.com/X3ZQZ2Q.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(106, 90, 205, 0.2);
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header i {
+            color: var(--accent-color);
+        }
+        
+        .open-sidebar {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .open-sidebar:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 22px;
+            margin: 0;
+        }
+        
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-sidebar:hover {
+            transform: rotate(90deg);
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+        
+        .sidebar-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .sidebar-menu a:hover::before {
+            right: 100%;
+        }
+        
+        .sidebar-menu i {
+            margin-left: 15px;
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 80px;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-size: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--accent-color);
+        }
+        
+        .add-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            background: var(--secondary-color);
+            transform: rotate(90deg);
+        }
+        
+        /* Schedule */
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+        
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+        
+        .time-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-left: 10px;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .schedule-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schedule-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .edit-btn, .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn {
+            color: var(--warning-color);
+        }
+        
+        .edit-btn:hover {
+            background: rgba(255, 152, 0, 0.1);
+        }
+        
+        .delete-btn {
+            color: var(--danger-color);
+        }
+        
+        .delete-btn:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        /* Health Tracker */
+        .health-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .health-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .health-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .health-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--health-color);
+        }
+        
+        .health-title {
+            font-size: 14px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .health-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        /* Notes */
+        .notes-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .notes-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .note {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .note:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+        
+        .note-content {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .note-date {
+            font-size: 12px;
+            color: #999;
+            text-align: left;
+        }
+        
+        /* Balance */
+        .balance-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+        
+        .balance-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(186, 104, 200, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            color: var(--balance-color);
+            font-size: 18px;
+        }
+        
+        .balance-content {
+            flex: 1;
+        }
+        
+        .balance-title {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .balance-desc {
+            font-size: 13px;
+            color: #777;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            color: var(--primary-color);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger-color);
+            transform: rotate(90deg);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+            outline: none;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Bottom Navbar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .nav-item.active, .nav-item:hover {
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(106, 90, 205, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(106, 90, 205, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(106, 90, 205, 0);
+            }
+        }
+        
+        /* Anime Elements */
+        .anime-char {
+            position: absolute;
+            width: 100px;
+            bottom: 80px;
+            left: 20px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .anime-char-2 {
+            position: absolute;
+            width: 120px;
+            top: 100px;
+            right: 20px;
+            z-index: -1;
+            opacity: 0.7;
+            transform: scaleX(-1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .anime-char, .anime-char-2 {
+                display: none;
+            }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Water Controls */
+        .water-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .water-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--health-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .water-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Time Input Fix for RTL */
+        input[type="time"] {
+            direction: ltr;
+            text-align: right;
+        }
+        
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .toggle-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+        
+        body.dark-mode .card {
+            background: rgba(30, 30, 30, 0.9);
+            color: #f5f5f5;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .card-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .note {
+            background: rgba(30, 30, 30, 0.9);
+            color: #f5f5f5;
+        }
+        
+        body.dark-mode .note-content {
+            color: #ccc;
+        }
+        
+        body.dark-mode .form-control {
+            background: #333;
+            border-color: #444;
+            color: #f5f5f5;
+        }
+        
+        body.dark-mode .bottom-navbar {
+            background: #1e1e1e;
+        }
+        
+        body.dark-mode .nav-item {
+            color: #aaa;
+        }
+        
+        body.dark-mode .nav-item.active, 
+        body.dark-mode .nav-item:hover {
+            color: var(--secondary-color);
+        }
+        
+        body.dark-mode .health-item {
+            background: rgba(30, 30, 30, 0.7);
+            color: #f5f5f5;
+        }
+        
+        body.dark-mode .empty-state {
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <button class="toggle-btn" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">القائمة</h3>
+            <button class="close-sidebar" id="closeSidebar">&times;</button>
+        </div>
+        <div class="sidebar-menu">
+
+            <a href="home.html">
+                <i class="fas fa-heartbeat"></i>
+                <span>الصحة </span>
+            </a>
+            <a href="#" id="notesLink">
+                <i class="fas fa-sticky-note"></i>
+                <span>الملاحظات</span>
+            </a>
+            <a href="#" id="logoutLink">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل الخروج</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Anime Characters -->
+    <img src="https://cdn-icons-gif.flaticon.com/13099/13099799.gif" class="anime-char floating" alt="Anime Character">
+    <img src="https://cdn-icons-gif.flaticon.com/11688/11688376.gif" class="anime-char-2 pulse" alt="Anime Character">
+
+    <!-- Main Content -->
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-calendar-alt"></i> يومياتي</h1>
+            <button class="open-sidebar" id="openSidebar">
+                <i class="fas fa-bars"></i> القائمة
+            </button>
+        </header>
+
+        <div class="dashboard">
+            <!-- Schedule Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-clock"></i> الجدول اليومي</h2>
+                    <button class="add-btn" id="addScheduleBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="card-body" id="scheduleList">
+                    <!-- Schedule items will be added here dynamically -->
+                </div>
+            </div>
+
+            <!-- Health Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-heartbeat"></i> صحتي اليوم</h2>
+                    <button class="add-btn" id="addHealthBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="card-body">
+                    <div class="health-stats">
+                        <div class="health-item">
+                            <div class="health-icon"><i class="fas fa-glass-whiskey"></i></div>
+                            <div class="health-title">كوب ماء</div>
+                            <div class="health-value" id="waterCount"></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="waterProgress" style="width: 0%"></div>
+                            </div>
+                            <div class="water-controls">
+                                <button class="water-btn" id="waterMinus">-</button>
+                                <button class="water-btn" id="waterPlus">+</button>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon"><i class="fas fa-walking"></i></div>
+                            <div class="health-title">خطوات</div>
+                            <div class="health-value" id="stepsCount"></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="stepsProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon"><i class="fas fa-bed"></i></div>
+                            <div class="health-title">ساعات نوم</div>
+                            <div class="health-value" id="sleepCount"></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="sleepProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon"><i class="fas fa-dumbbell"></i></div>
+                            <div class="health-title">تمارين</div>
+                            <div class="health-value" id="exerciseCount"></div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="exerciseProgress" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-sticky-note"></i> ملاحظاتي</h2>
+                    <button class="add-btn" id="addNoteBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="card-body">
+                    <div class="notes-container" id="notesList">
+                        <!-- Notes will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Balance Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-brain"></i> توازني النفسي</h2>
+                    <button class="add-btn" id="addBalanceBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="card-body" id="balanceList">
+                    <!-- Balance items will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navbar -->
+    <nav class="bottom-navbar">
+        <a href="home.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#" class="nav-item" id="scheduleNav">
+            <i class="fas fa-calendar"></i>
+            <span>الجدول</span>
+        </a>
+        <a href="#" class="nav-item" id="notesNav">
+            <i class="fas fa-book"></i>
+            <span>الملاحظات</span>
+        </a>
+        <a href="login.html" class="nav-item" id="settingsNav">
+            <i class="fas fa-sign-out"></i>
+            <span>تسجيل الخروج</span>
+        </a>
+    </nav>
+
+    <!-- Modals -->
+    <!-- Schedule Modal -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة موعد جديد</h3>
+                <button class="close-modal" id="closeScheduleModal">&times;</button>
+            </div>
+            <form id="scheduleForm">
+                <input type="hidden" id="scheduleId">
+                <div class="form-group">
+                    <label for="scheduleTime">الوقت</label>
+                    <input type="time" class="form-control" id="scheduleTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleTitle">العنوان</label>
+                    <input type="text" class="form-control" id="scheduleTitle" placeholder="ماذا تريد أن تفعل؟" required>
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDesc">الوصف (اختياري)</label>
+                    <textarea class="form-control" id="scheduleDesc" rows="3" placeholder="أضف وصفًا إذا لزم الأمر"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">حفظ الموعد</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Health Modal -->
+    <div class="modal" id="healthModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تحديث الصحة</h3>
+                <button class="close-modal" id="closeHealthModal">&times;</button>
+            </div>
+            <form id="healthForm">
+                <div class="form-group">
+                    <label>اختر العنصر لتحديثه</label>
+                    <select class="form-control" id="healthItem">
+                        <option value="water">كوب ماء</option>
+                        <option value="steps">الخطوات</option>
+                        <option value="sleep">ساعات النوم</option>
+                        <option value="exercise">التمارين</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="healthValue">القيمة</label>
+                    <input type="number" class="form-control" id="healthValue" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">تحديث</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Note Modal -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة ملاحظة جديدة</h3>
+                <button class="close-modal" id="closeNoteModal">&times;</button>
+            </div>
+            <form id="noteForm">
+                <input type="hidden" id="noteId">
+                <div class="form-group">
+                    <label for="noteTitle">عنوان الملاحظة</label>
+                    <input type="text" class="form-control" id="noteTitle" placeholder="عنوان الملاحظة" required>
+                </div>
+                <div class="form-group">
+                    <label for="noteContent">المحتوى</label>
+                    <textarea class="form-control" id="noteContent" rows="5" placeholder="اكتب ملاحظتك هنا..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">حفظ الملاحظة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Balance Modal -->
+    <div class="modal" id="balanceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة نشاط توازن</h3>
+                <button class="close-modal" id="closeBalanceModal">&times;</button>
+            </div>
+            <form id="balanceForm">
+                <input type="hidden" id="balanceId">
+                <div class="form-group">
+                    <label for="balanceTitle">العنوان</label>
+                    <input type="text" class="form-control" id="balanceTitle" placeholder="ماذا فعلت لتحسين توازنك؟" required>
+                </div>
+                <div class="form-group">
+                    <label for="balanceDesc">الوصف</label>
+                    <textarea class="form-control" id="balanceDesc" rows="3" placeholder="كيف ساعدك هذا النشاط؟" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="balanceType">نوع النشاط</label>
+                    <select class="form-control" id="balanceType" required>
+                        <option value="meditation">تأمل</option>
+                        <option value="reading">قراءة</option>
+                        <option value="journaling">كتابة يوميات</option>
+                        <option value="gratitude">امتنان</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">حفظ النشاط</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const openSidebarBtn = document.getElementById('openSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+        
+        // Modals
+        const scheduleModal = document.getElementById('scheduleModal');
+        const healthModal = document.getElementById('healthModal');
+        const noteModal = document.getElementById('noteModal');
+        const balanceModal = document.getElementById('balanceModal');
+        
+        // Buttons
+        const addScheduleBtn = document.getElementById('addScheduleBtn');
+        const addHealthBtn = document.getElementById('addHealthBtn');
+        const addNoteBtn = document.getElementById('addNoteBtn');
+        const addBalanceBtn = document.getElementById('addBalanceBtn');
+        
+        // Close buttons
+        const closeScheduleModal = document.getElementById('closeScheduleModal');
+        const closeHealthModal = document.getElementById('closeHealthModal');
+        const closeNoteModal = document.getElementById('closeNoteModal');
+        const closeBalanceModal = document.getElementById('closeBalanceModal');
+        
+        // Forms
+        const scheduleForm = document.getElementById('scheduleForm');
+        const healthForm = document.getElementById('healthForm');
+        const noteForm = document.getElementById('noteForm');
+        const balanceForm = document.getElementById('balanceForm');
+        
+        // Lists
+        const scheduleList = document.getElementById('scheduleList');
+        const notesList = document.getElementById('notesList');
+        const balanceList = document.getElementById('balanceList');
+        
+        // Health elements
+        const waterCount = document.getElementById('waterCount');
+        const stepsCount = document.getElementById('stepsCount');
+        const sleepCount = document.getElementById('sleepCount');
+        const exerciseCount = document.getElementById('exerciseCount');
+        const waterProgress = document.getElementById('waterProgress');
+        const stepsProgress = document.getElementById('stepsProgress');
+        const sleepProgress = document.getElementById('sleepProgress');
+        const exerciseProgress = document.getElementById('exerciseProgress');
+        const waterPlus = document.getElementById('waterPlus');
+        const waterMinus = document.getElementById('waterMinus');
+        
+        // Nav items
+        const homeNav = document.getElementById('homeNav');
+        const scheduleNav = document.getElementById('scheduleNav');
+        const healthNav = document.getElementById('healthNav');
+        const notesNav = document.getElementById('notesNav');
+        const settingsNav = document.getElementById('settingsNav');
+        
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        // Data
+        let schedules = [];
+        let notes = [];
+        let balanceActivities = [];
+        let healthData = {
+            water: 0,
+            steps: 0,
+            sleep: 0,
+            exercise: 0
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            renderSchedules();
+            renderNotes();
+            renderBalanceActivities();
+            updateHealthCounters();
+            
+            // Sidebar toggle
+            openSidebarBtn.addEventListener('click', toggleSidebar);
+            closeSidebarBtn.addEventListener('click', toggleSidebar);
+            
+            // Modal open buttons
+            addScheduleBtn.addEventListener('click', () => {
+                document.getElementById('scheduleId').value = '';
+                scheduleForm.reset();
+                scheduleModal.style.display = 'flex';
+            });
+            
+            addHealthBtn.addEventListener('click', () => {
+                healthForm.reset();
+                healthModal.style.display = 'flex';
+            });
+            
+            addNoteBtn.addEventListener('click', () => {
+                document.getElementById('noteId').value = '';
+                noteForm.reset();
+                noteModal.style.display = 'flex';
+            });
+            
+            addBalanceBtn.addEventListener('click', () => {
+                document.getElementById('balanceId').value = '';
+                balanceForm.reset();
+                balanceModal.style.display = 'flex';
+            });
+            
+            // Modal close buttons
+            closeScheduleModal.addEventListener('click', () => scheduleModal.style.display = 'none');
+            closeHealthModal.addEventListener('click', () => healthModal.style.display = 'none');
+            closeNoteModal.addEventListener('click', () => noteModal.style.display = 'none');
+            closeBalanceModal.addEventListener('click', () => balanceModal.style.display = 'none');
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === scheduleModal) scheduleModal.style.display = 'none';
+                if (e.target === healthModal) healthModal.style.display = 'none';
+                if (e.target === noteModal) noteModal.style.display = 'none';
+                if (e.target === balanceModal) balanceModal.style.display = 'none';
+            });
+            
+            // Form submissions
+            scheduleForm.addEventListener('submit', handleScheduleSubmit);
+            healthForm.addEventListener('submit', handleHealthSubmit);
+            noteForm.addEventListener('submit', handleNoteSubmit);
+            balanceForm.addEventListener('submit', handleBalanceSubmit);
+            
+            // Water controls
+            waterPlus.addEventListener('click', () => {
+                healthData.water = Math.min(8, healthData.water + 1);
+                updateHealthCounters();
+                saveData();
+            });
+            
+            waterMinus.addEventListener('click', () => {
+                healthData.water = Math.max(0, healthData.water - 1);
+                updateHealthCounters();
+                saveData();
+            });
+            
+            // Nav items
+            homeNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(homeNav);
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            scheduleNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(scheduleNav);
+                // Scroll to schedule section
+                document.querySelector('.card:nth-child(1)').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            healthNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(healthNav);
+                // Scroll to health section
+                document.querySelector('.card:nth-child(2)').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            notesNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(notesNav);
+                // Scroll to notes section
+                document.querySelector('.card:nth-child(3)').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            settingsNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(settingsNav);
+                // Open settings in sidebar
+                document.getElementById('settingsLink').click();
+                toggleSidebar();
+            });
+            
+            // Sidebar links
+            document.getElementById('profileLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(null);
+                alert('سيتم تطوير صفحة الملف الشخصي في التحديثات القادمة');
+                toggleSidebar();
+            });
+            
+            document.getElementById('settingsLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(settingsNav);
+                alert('سيتم تطوير صفحة الإعدادات في التحديثات القادمة');
+                toggleSidebar();
+            });
+            
+            document.getElementById('scheduleLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(scheduleNav);
+                document.querySelector('.card:nth-child(1)').scrollIntoView({ behavior: 'smooth' });
+                toggleSidebar();
+            });
+            
+            document.getElementById('healthLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(healthNav);
+                document.querySelector('.card:nth-child(2)').scrollIntoView({ behavior: 'smooth' });
+                toggleSidebar();
+            });
+            
+            document.getElementById('notesLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(notesNav);
+                document.querySelector('.card:nth-child(3)').scrollIntoView({ behavior: 'smooth' });
+                toggleSidebar();
+            });
+            
+            document.getElementById('balanceLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                setActiveNav(null);
+                document.querySelector('.card:nth-child(4)').scrollIntoView({ behavior: 'smooth' });
+                toggleSidebar();
+            });
+            
+            document.getElementById('logoutLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('هل أنت متأكد أنك تريد تسجيل الخروج؟')) {
+                    alert('تم تسجيل الخروج بنجاح');
+                    // In a real app, you would redirect to login page
+                }
+                toggleSidebar();
+            });
+            
+            // Dark mode toggle
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            // Add some sample data if empty
+            if (schedules.length === 0 && notes.length === 0 && balanceActivities.length === 0) {
+                addSampleData();
+            }
+        });
+        
+        // Set active nav item
+        function setActiveNav(activeItem) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+        }
+        
+        // Toggle sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+        }
+        
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+        
+        // Load data from localStorage
+        function loadData() {
+            if (localStorage.getItem('schedules')) {
+                schedules = JSON.parse(localStorage.getItem('schedules'));
+            }
+            
+            if (localStorage.getItem('notes')) {
+                notes = JSON.parse(localStorage.getItem('notes'));
+            }
+            
+            if (localStorage.getItem('balanceActivities')) {
+                balanceActivities = JSON.parse(localStorage.getItem('balanceActivities'));
+            }
+            
+            if (localStorage.getItem('healthData')) {
+                healthData = JSON.parse(localStorage.getItem('healthData'));
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('schedules', JSON.stringify(schedules));
+            localStorage.setItem('notes', JSON.stringify(notes));
+            localStorage.setItem('balanceActivities', JSON.stringify(balanceActivities));
+            localStorage.setItem('healthData', JSON.stringify(healthData));
+        }
+        
+        // Add sample data
+        function addSampleData() {
+            // Sample schedules
+            schedules = [
+                {
+                    time: '08:00',
+                    title: 'وجبة الفطور',
+                    desc: 'تناول وجبة فطور صحية'
+                },
+                {
+                    time: '12:00',
+                    title: 'اجتماع العمل',
+                    desc: 'اجتماع مع فريق العمل لمناقشة المشروع الجديد'
+                },
+                {
+                    time: '18:00',
+                    title: 'تمارين رياضية',
+                    desc: '30 دقيقة من التمارين الرياضية'
+                }
+            ];
+            
+            // Sample notes
+            notes = [
+                {
+                    title: 'أفكار للمشروع',
+                    content: 'التفكير في إضافة ميزة جديدة للتطبيق تتيح مشاركة الجداول مع الأصدقاء',
+                    date: new Date().toISOString()
+                },
+                {
+                    title: 'قائمة التسوق',
+                    content: 'حليب، خبز، بيض، فواكه، خضروات',
+                    date: new Date().toISOString()
+                }
+            ];
+            
+            // Sample balance activities
+            balanceActivities = [
+                {
+                    title: 'جلسة تأمل',
+                    desc: '15 دقيقة من التأمل الصباحي لبدء اليوم بنشاط',
+                    type: 'meditation',
+                    date: new Date().toISOString()
+                },
+                {
+                    title: 'كتابة يوميات',
+                    desc: 'تسجيل الأحداث اليومية والأفكار المهمة',
+                    type: 'journaling',
+                    date: new Date().toISOString()
+                }
+            ];
+            
+            // Sample health data
+            healthData = {
+                water: 2,
+                steps: 2500,
+                sleep: 6,
+                exercise: 15
+            };
+            
+            saveData();
+            renderSchedules();
+            renderNotes();
+            renderBalanceActivities();
+            updateHealthCounters();
+        }
+        
+        // Schedule functions
+        function renderSchedules() {
+            scheduleList.innerHTML = '';
+            
+            if (schedules.length === 0) {
+                scheduleList.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-alt" style="font-size: 24px; margin-bottom: 10px;"></i><p>لا توجد مواعيد مضافة بعد</p></div>';
+                return;
+            }
+            
+            // Sort schedules by time
+            schedules.sort((a, b) => {
+                const timeA = a.time.split(':');
+                const timeB = b.time.split(':');
+                return parseInt(timeA[0]) - parseInt(timeB[0]) || parseInt(timeA[1]) - parseInt(timeB[1]);
+            });
+            
+            schedules.forEach((schedule, index) => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <div class="time-badge">${schedule.time}</div>
+                    <div class="schedule-content">
+                        <div>
+                            <strong>${schedule.title}</strong>
+                            ${schedule.desc ? `<p style="font-size: 13px; color: #666; margin-top: 3px;">${schedule.desc}</p>` : ''}
+                        </div>
+                        <div class="schedule-actions">
+                            <button class="edit-btn" data-id="${index}"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" data-id="${index}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                scheduleList.appendChild(scheduleItem);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    editSchedule(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    deleteSchedule(id);
+                });
+            });
+        }
+        
+        function handleScheduleSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('scheduleId').value;
+            const time = document.getElementById('scheduleTime').value;
+            const title = document.getElementById('scheduleTitle').value;
+            const desc = document.getElementById('scheduleDesc').value;
+            
+            const schedule = {
+                time,
+                title,
+                desc
+            };
+            
+            if (id === '') {
+                // Add new schedule
+                schedules.push(schedule);
+            } else {
+                // Update existing schedule
+                schedules[id] = schedule;
+            }
+            
+            saveData();
+            renderSchedules();
+            scheduleModal.style.display = 'none';
+        }
+        
+        function editSchedule(id) {
+            const schedule = schedules[id];
+            document.getElementById('scheduleId').value = id;
+            document.getElementById('scheduleTime').value = schedule.time;
+            document.getElementById('scheduleTitle').value = schedule.title;
+            document.getElementById('scheduleDesc').value = schedule.desc;
+            scheduleModal.style.display = 'flex';
+        }
+        
+        function deleteSchedule(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الموعد؟')) {
+                schedules.splice(id, 1);
+                saveData();
+                renderSchedules();
+            }
+        }
+        
+        // Health functions
+        function updateHealthCounters() {
+            // Update water
+            waterCount.textContent = `${healthData.water}/8`;
+            waterProgress.style.width = `${(healthData.water / 8) * 100}%`;
+            
+            // Update steps
+            stepsCount.textContent = `${healthData.steps}/5000`;
+            stepsProgress.style.width = `${(healthData.steps / 5000) * 100}%`;
+            
+            // Update sleep
+            sleepCount.textContent = `${healthData.sleep}/8`;
+            sleepProgress.style.width = `${(healthData.sleep / 8) * 100}%`;
+            
+            // Update exercise
+            exerciseCount.textContent = `${healthData.exercise}/30 دقيقة`;
+            exerciseProgress.style.width = `${(healthData.exercise / 30) * 100}%`;
+        }
+        
+        function handleHealthSubmit(e) {
+            e.preventDefault();
+            
+            const item = document.getElementById('healthItem').value;
+            const value = parseInt(document.getElementById('healthValue').value);
+            
+            switch (item) {
+                case 'water':
+                    healthData.water = Math.min(8, value);
+                    break;
+                case 'steps':
+                    healthData.steps = Math.min(10000, value);
+                    break;
+                case 'sleep':
+                    healthData.sleep = Math.min(12, value);
+                    break;
+                case 'exercise':
+                    healthData.exercise = Math.min(120, value);
+                    break;
+            }
+            
+            saveData();
+            updateHealthCounters();
+            healthModal.style.display = 'none';
+        }
+        
+        // Notes functions
+        function renderNotes() {
+            notesList.innerHTML = '';
+            
+            if (notes.length === 0) {
+                notesList.innerHTML = '<div class="empty-state"><i class="fas fa-sticky-note" style="font-size: 24px; margin-bottom: 10px;"></i><p>لا توجد ملاحظات مضافة بعد</p></div>';
+                return;
+            }
+            
+            // Sort notes by date (newest first)
+            notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            notes.forEach((note, index) => {
+                const noteElement = document.createElement('div');
+                noteElement.className = 'note';
+                noteElement.innerHTML = `
+                    <div class="note-title">${note.title}</div>
+                    <div class="note-content">${note.content}</div>
+                    <div class="note-date">${formatDate(note.date)}</div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 10px; gap: 5px;">
+                        <button class="edit-btn" data-id="${index}" style="font-size: 12px; padding: 3px 8px;"><i class="fas fa-edit"></i> تعديل</button>
+                        <button class="delete-btn" data-id="${index}" style="font-size: 12px; padding: 3px 8px;"><i class="fas fa-trash"></i> حذف</button>
+                    </div>
+                `;
+                notesList.appendChild(noteElement);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.note .edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    editNote(id);
+                });
+            });
+            
+            document.querySelectorAll('.note .delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    deleteNote(id);
+                });
+            });
+        }
+        
+        function handleNoteSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('noteId').value;
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+            const date = new Date().toISOString();
+            
+            const note = {
+                title,
+                content,
+                date
+            };
+            
+            if (id === '') {
+                // Add new note
+                notes.push(note);
+            } else {
+                // Update existing note
+                notes[id] = note;
+            }
+            
+            saveData();
+            renderNotes();
+            noteModal.style.display = 'none';
+        }
+        
+        function editNote(id) {
+            const note = notes[id];
+            document.getElementById('noteId').value = id;
+            document.getElementById('noteTitle').value = note.title;
+            document.getElementById('noteContent').value = note.content;
+            noteModal.style.display = 'flex';
+        }
+        
+        function deleteNote(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الملاحظة؟')) {
+                notes.splice(id, 1);
+                saveData();
+                renderNotes();
+            }
+        }
+        
+        // Balance functions
+        function renderBalanceActivities() {
+            balanceList.innerHTML = '';
+            
+            if (balanceActivities.length === 0) {
+                balanceList.innerHTML = '<div class="empty-state"><i class="fas fa-brain" style="font-size: 24px; margin-bottom: 10px;"></i><p>لا توجد أنشطة مضافة بعد</p></div>';
+                return;
+            }
+            
+            // Sort activities by date (newest first)
+            balanceActivities.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            balanceActivities.forEach((activity, index) => {
+                const activityElement = document.createElement('div');
+                activityElement.className = 'balance-item';
+                activityElement.innerHTML = `
+                    <div class="balance-icon">
+                        ${getBalanceIcon(activity.type)}
+                    </div>
+                    <div class="balance-content">
+                        <div class="balance-title">${activity.title}</div>
+                        <div class="balance-desc">${activity.desc}</div>
+                        <div style="font-size: 12px; color: #999; margin-top: 5px;">${formatDate(activity.date)}</div>
+                    </div>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="edit-btn" data-id="${index}" style="font-size: 12px; padding: 3px 8px;"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" data-id="${index}" style="font-size: 12px; padding: 3px 8px;"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                balanceList.appendChild(activityElement);
+            });
+            
+            // Add event listeners to edit and delete buttons
+            document.querySelectorAll('.balance-item .edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    editBalanceActivity(id);
+                });
+            });
+            
+            document.querySelectorAll('.balance-item .delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    deleteBalanceActivity(id);
+                });
+            });
+        }
+        
+        function getBalanceIcon(type) {
+            switch (type) {
+                case 'meditation': return '<i class="fas fa-spa"></i>';
+                case 'reading': return '<i class="fas fa-book-open"></i>';
+                case 'journaling': return '<i class="fas fa-pen"></i>';
+                case 'gratitude': return '<i class="fas fa-hands-helping"></i>';
+                default: return '<i class="fas fa-star"></i>';
+            }
+        }
+        
+        function handleBalanceSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('balanceId').value;
+            const title = document.getElementById('balanceTitle').value;
+            const desc = document.getElementById('balanceDesc').value;
+            const type = document.getElementById('balanceType').value;
+            const date = new Date().toISOString();
+            
+            const activity = {
+                title,
+                desc,
+                type,
+                date
+            };
+            
+            if (id === '') {
+                // Add new activity
+                balanceActivities.push(activity);
+            } else {
+                // Update existing activity
+                balanceActivities[id] = activity;
+            }
+            
+            saveData();
+            renderBalanceActivities();
+            balanceModal.style.display = 'none';
+        }
+        
+        function editBalanceActivity(id) {
+            const activity = balanceActivities[id];
+            document.getElementById('balanceId').value = id;
+            document.getElementById('balanceTitle').value = activity.title;
+            document.getElementById('balanceDesc').value = activity.desc;
+            document.getElementById('balanceType').value = activity.type;
+            balanceModal.style.display = 'flex';
+        }
+        
+        function deleteBalanceActivity(id) {
+            if (confirm('هل أنت متأكد من حذف هذا النشاط؟')) {
+                balanceActivities.splice(id, 1);
+                saveData();
+                renderBalanceActivities();
+            }
+        }
+        
+        // Helper function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    </script>
+</body>
+</html>

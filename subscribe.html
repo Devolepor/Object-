@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج الاشتراك</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50%;
+            height: 50%;
+            object-fit: contain;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        .input-group input, 
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .input-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .input-group input:focus, 
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #068158;
+            box-shadow: 0 0 0 3px rgba(6, 129, 88, 0.2);
+            outline: none;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: #068158;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #056a4f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 129, 88, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-next {
+            float: left;
+        }
+        
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+            float: right;
+        }
+        
+        .btn-back:hover {
+            background: #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-upload {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-upload-label {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .image-upload-label:hover {
+            border-color: #068158;
+        }
+        
+        .image-upload-label img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .image-upload-label .upload-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #999;
+        }
+        
+        #imageUpload {
+            display: none;
+        }
+        
+        /* نافذة النجاح المنبثقة */
+        .success-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .success-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .success-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #4CAF50;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .checkmark::after {
+            content: "";
+            position: absolute;
+            left: 28px;
+            top: 38px;
+            width: 25px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 5px 5px 0;
+            transform: rotate(45deg);
+        }
+        
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
+        </div>
+        
+        <h1>نموذج الاشتراك</h1>
+        
+        <!-- الخطوة الأولى -->
+        <div class="step active" id="step1">
+            <div class="input-group">
+                <label for="fullName">الاسم بالكامل</label>
+                <input type="text" id="fullName" placeholder="أدخل الاسم بالكامل" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="phone">رقم الهاتف</label>
+                <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="address">العنوان التفصيلي</label>
+                <textarea id="address" placeholder="أدخل العنوان التفصيلي" required></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="specialty">التخصص</label>
+                <input type="text" id="specialty" placeholder="أدخل التخصص" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="description">الوصف</label>
+                <textarea id="description" placeholder="أدخل وصفاً عن نفسك"></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="governorate">المحافظة</label>
+                <select id="governorate" required>
+                    <option value="">اختر المحافظة</option>
+                    <option value="القاهرة">القاهرة</option>
+                    <option value="الإسكندرية">الإسكندرية</option>
+                    <option value="الجيزة">الجيزة</option>
+                    <option value="القليوبية">القليوبية</option>
+                    <option value="الشرقية">الشرقية</option>
+                    <option value="الدقهلية">الدقهلية</option>
+                    <option value="الغربية">الغربية</option>
+                    <option value="المنوفية">المنوفية</option>
+                    <option value="البحيرة">البحيرة</option>
+                    <option value="كفر الشيخ">كفر الشيخ</option>
+                    <option value="دمياط">دمياط</option>
+                    <option value="بورسعيد">بورسعيد</option>
+                    <option value="الإسماعيلية">الإسماعيلية</option>
+                    <option value="السويس">السويس</option>
+                    <option value="شمال سيناء">شمال سيناء</option>
+                    <option value="جنوب سيناء">جنوب سيناء</option>
+                    <option value="البحر الأحمر">البحر الأحمر</option>
+                    <option value="الفيوم">الفيوم</option>
+                    <option value="بني سويف">بني سويف</option>
+                    <option value="المنيا">المنيا</option>
+                    <option value="أسيوط">أسيوط</option>
+                    <option value="سوهاج">سوهاج</option>
+                    <option value="قنا">قنا</option>
+                    <option value="الأقصر">الأقصر</option>
+                    <option value="أسوان">أسوان</option>
+                    <option value="الوادي الجديد">الوادي الجديد</option>
+                    <option value="مطروح">مطروح</option>
+                </select>
+            </div>
+            
+            <div class="image-upload">
+                <label for="imageUpload" class="image-upload-label">
+                    <img id="previewImage" src="#" alt="Preview">
+                    <div class="upload-icon">+</div>
+                </label>
+                <input type="file" id="imageUpload" accept="image/*">
+                <p>رفع صورة شخصية (اختياري)</p>
+            </div>
+            
+            <div class="clearfix">
+                <button class="btn btn-next" onclick="nextStep()">التالي</button>
+            </div>
+        </div>
+        
+        <!-- الخطوة الثانية (التأكيد) -->
+        <div class="step" id="step2">
+            <h2 style="margin-bottom: 20px;">تأكيد المعلومات</h2>
+            
+            <div class="input-group">
+                <label>الاسم بالكامل</label>
+                <p id="confirmName" style="text-align: right; padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            
+            <div class="input-group">
+                <label>رقم الهاتف</label>
+                <p id="confirmPhone" style="text-align: right; padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            
+            <div class="input-group">
+                <label>المحافظة</label>
+                <p id="confirmGovernorate" style="text-align: right; padding: 10px; background: #f5f5f5; border-radius: 5px;"></p>
+            </div>
+            
+            <div class="clearfix">
+                <button class="btn btn-back" onclick="prevStep()">العودة</button>
+                <button class="btn" onclick="submitForm()">إرسال الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة النجاح المنبثقة -->
+    <div class="success-popup" id="successPopup">
+        <div class="success-content">
+            <div class="checkmark"></div>
+            <h2>تم إرسال طلبك بنجاح!</h2>
+            <p>سوف يتم الرد عليك قريباً</p>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات لتخزين البيانات
+        let formData = {};
+        const TELEGRAM_BOT_TOKEN = "8378355115:AAGXmllKqX8UgHv60_rw4EAUtwQpKbhiS7E";
+        const TELEGRAM_CHAT_ID = "8219176247";
+        
+        // عرض معاينة الصورة
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('previewImage');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.querySelector('.upload-icon').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // الانتقال للخطوة التالية
+        function nextStep() {
+            // التحقق من صحة البيانات
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const specialty = document.getElementById('specialty').value;
+            const governorate = document.getElementById('governorate').value;
+            
+            if (!fullName || !phone || !address || !specialty || !governorate) {
+                alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            if (phone.length < 10 || !/^\d+$/.test(phone)) {
+                alert('رقم الهاتف غير صحيح');
+                return;
+            }
+            
+            // حفظ البيانات
+            formData = {
+                fullName: fullName,
+                phone: phone,
+                address: address,
+                specialty: specialty,
+                description: document.getElementById('description').value,
+                governorate: governorate,
+                image: document.getElementById('imageUpload').files[0]
+            };
+            
+            // عرض بيانات التأكيد
+            document.getElementById('confirmName').textContent = fullName;
+            document.getElementById('confirmPhone').textContent = phone;
+            document.getElementById('confirmGovernorate').textContent = governorate;
+            
+            // تغيير الخطوة
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        }
+        
+        // العودة للخطوة السابقة
+        function prevStep() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+        }
+        
+        // إرسال النموذج
+        async function submitForm() {
+            try {
+                // إعداد رسالة التليجرام
+                let message = `طلب اشتراك جديد:\n\n`;
+                message += `الاسم: ${formData.fullName}\n`;
+                message += `الهاتف: ${formData.phone}\n`;
+                message += `العنوان: ${formData.address}\n`;
+                message += `التخصص: ${formData.specialty}\n`;
+                message += `المحافظة: ${formData.governorate}\n`;
+                message += `الوصف: ${formData.description || 'لا يوجد'}\n`;
+                
+                // إرسال الرسالة إلى التليجرام
+                const response = await sendToTelegram(message);
+                
+                // إذا كانت هناك صورة، نرسلها أيضاً
+                if (formData.image) {
+                    await sendPhotoToTelegram(formData.image);
+                }
+                
+                // عرض نافذة النجاح
+                document.getElementById('successPopup').classList.add('active');
+                
+                // التحويل إلى الصفحة الرئيسية بعد 10 ثواني
+                setTimeout(() => {
+                    window.location.href = "app.html";
+                }, 10000);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء إرسال البيانات. الرجاء المحاولة مرة أخرى.');
+            }
+        }
+        
+        // إرسال رسالة إلى التليجرام
+        async function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('فشل في إرسال الرسالة');
+            }
+            
+            return await response.json();
+        }
+        
+        // إرسال صورة إلى التليجرام
+        async function sendPhotoToTelegram(imageFile) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+            const formData = new FormData();
+            
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', imageFile);
+            formData.append('caption', 'صورة المستخدم');
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('فشل في إرسال الصورة');
+            }
+            
+            return await response.json();
+        }
+    </script>
+</body>
+</html>

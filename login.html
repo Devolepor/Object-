@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الدخول</title>
+  <style>
+    :root {
+      --primary: #068158;
+      --secondary: #00c9a7;
+      --bg: #f7f9fc;
+      --dark: #2d3436;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: white;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: #f1f1f1;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo img {
+      width: 60%;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      color: var(--dark);
+    }
+
+    .input-group {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: var(--radius);
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .btn-login {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: var(--radius);
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-login:hover {
+      background: #046b48;
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .links a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      display: none;
+    }
+
+    .success { background: #e8f5e9; color: #388e3c; }
+    .error { background: #ffebee; color: #d32f2f; }
+
+    .loading {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 4px solid #eee;
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .success-popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+
+    .success-popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .success-content {
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius);
+      text-align: center;
+      width: 90%;
+      max-width: 360px;
+    }
+
+    .checkmark {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #4caf50;
+      margin: auto auto 15px;
+      position: relative;
+    }
+
+    .checkmark::after {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 28px;
+      width: 20px;
+      height: 10px;
+      border: solid #fff;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/128/11924/11924977.png" alt="logo">
+    </div>
+    <h1>تسجيل الدخول</h1>
+
+    <div class="input-group">
+      <label for="username">رقم الهاتف</label>
+      <input type="text" id="username" placeholder="أدخل رقم الهاتف">
+    </div>
+
+    <div class="input-group">
+      <label for="password">كلمة المرور</label>
+      <input type="password" id="password" placeholder="أدخل كلمة المرور">
+    </div>
+
+    <button class="btn-login" onclick="login()">تسجيل الدخول</button>
+
+    <div class="links">
+      <a href="app.html">العودة</a>
+      <a href="signup.html">حساب جديد</a>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p style="color: #444;">جاري التحقق...</p>
+    </div>
+  </div>
+
+  <!-- نافذة النجاح -->
+  <div class="success-popup" id="successPopup">
+    <div class="success-content">
+      <div class="checkmark"></div>
+      <h2>تم تسجيل الدخول!</h2>
+      <p>جاري تحويلك الآن...</p>
+    </div>
+  </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const message = document.getElementById('message');
+      const loading = document.getElementById('loading');
+      const popup = document.getElementById('successPopup');
+
+      message.style.display = "none";
+      loading.style.display = "block";
+
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/Devolepor/Object-/main/data.json');
+        if (!response.ok) throw new Error('فشل تحميل البيانات');
+
+        const data = await response.json();
+        const users = data.users;
+
+        loading.style.display = "none";
+
+        const user = users.find(u => u.phone === username && u.password === password);
+
+        if (user) {
+          message.textContent = `مرحباً ${user.fullName}`;
+          message.className = "message success";
+          message.style.display = "block";
+
+          popup.classList.add("active");
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 3000);
+        } else {
+          message.textContent = "رقم الهاتف أو كلمة المرور غير صحيحة";
+          message.className = "message error";
+          message.style.display = "block";
+        }
+      } catch (err) {
+        loading.style.display = "none";
+        message.textContent = "خطأ في الاتصال بالخادم: " + err.message;
+        message.className = "message error";
+        message.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

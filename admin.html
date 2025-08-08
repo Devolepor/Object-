@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الأطباء</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --dark-color: #2d3748;
+            --light-color: #f7fafc;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --danger-color: #f56565;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            animation: fadeInDown 1s;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+            animation: fadeInLeft 1s;
+        }
+
+        .sidebar h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #38a169;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #e53e3e;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #dd6b20;
+        }
+
+        .main-content {
+            animation: fadeInRight 1s;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header h2 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            margin-bottom: 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .doctor-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .badge-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .edit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+        }
+
+        .edit-btn:hover {
+            background-color: #29b6f6;
+        }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+        }
+
+        .delete-btn:hover {
+            background-color: #e53e3e;
+        }
+
+        .status-toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .status-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .schedule-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .schedule-day {
+            background-color: #e3f2fd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            color: white;
+            animation: fadeIn 0.5s;
+        }
+
+        .alert-success {
+            background-color: var(--success-color);
+        }
+
+        .alert-danger {
+            background-color: var(--danger-color);
+        }
+
+        .close-btn {
+            float: left;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 700px;
+            animation: slideInDown 0.3s;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h2 {
+            color: var(--secondary-color);
+        }
+
+        .close-modal {
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 3px;
+            }
+            
+            .action-btn {
+                padding: 3px 6px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animate__animated animate__fadeInDown">
+            <h1><i class="fas fa-user-md"></i> لوحة تحكم الأطباء</h1>
+            <p>إدارة بيانات الأطباء وتحديثها مباشرة على GitHub</p>
+        </header>
+
+        <div id="alert-container"></div>
+
+        <div class="dashboard">
+            <aside class="sidebar animate__animated animate__fadeInLeft">
+                <h2><i class="fas fa-plus-circle"></i> إضافة طبيب جديد</h2>
+                <form id="doctor-form">
+                    <input type="hidden" id="doctor-id">
+                    
+                    <div class="form-group">
+                        <label for="doctor-name">اسم الطبيب</label>
+                        <input type="text" id="doctor-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-specialty">التخصص</label>
+                        <select id="doctor-specialty" class="form-control" required>
+                            <option value="">اختر التخصص</option>
+                            <option value="أمراض القلب">أمراض القلب</option>
+                            <option value="النساء والتوليد">النساء والتوليد</option>
+                            <option value="العظام">العظام</option>
+                            <option value="الأطفال">الأطفال</option>
+                            <option value="الأعصاب">الأعصاب</option>
+                            <option value="الجلدية">الجلدية</option>
+                            <option value="الباطنة">الباطنة</option>
+                            <option value="العيون">العيون</option>
+                            <option value="الأنف والأذن والحنجرة">الأنف والأذن والحنجرة</option>
+                            <option value="جراحة عامة">جراحة عامة</option>
+                            <option value="جراحة المخ والأعصاب">جراحة المخ والأعصاب</option>
+                            <option value="جراحة العظام">جراحة العظام</option>
+                            <option value="جراحة التجميل">جراحة التجميل</option>
+                            <option value="جراحة الأطفال">جراحة الأطفال</option>
+                            <option value="جراحة المسالك البولية">جراحة المسالك البولية</option>
+                            <option value="جراحة الأوعية الدموية">جراحة الأوعية الدموية</option>
+                            <option value="جراحة الصدر">جراحة الصدر</option>
+                            <option value="جراحة القلب">جراحة القلب</option>
+                            <option value="جراحة الوجه والفكين">جراحة الوجه والفكين</option>
+                            <option value="طب الأسرة">طب الأسرة</option>
+                            <option value="الطب الطبيعي والتأهيل">الطب الطبيعي والتأهيل</option>
+                            <option value="الطب النفسي">الطب النفسي</option>
+                            <option value="الأورام">الأورام</option>
+                            <option value="الغدد الصماء">الغدد الصماء</option>
+                            <option value="الحساسية والمناعة">الحساسية والمناعة</option>
+                            <option value="الروماتيزم">الروماتيزم</option>
+                            <option value="التخدير">التخدير</option>
+                            <option value="الأشعة">الأشعة</option>
+                            <option value="المختبرات">المختبرات</option>
+                            <option value="التغذية العلاجية">التغذية العلاجية</option>
+                            <option value="الطب النووي">الطب النووي</option>
+                            <option value="الطب الرياضي">الطب الرياضي</option>
+                            <option value="الطب الشرعي">الطب الشرعي</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-phone">رقم الهاتف</label>
+                        <input type="tel" id="doctor-phone" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-governorate">المحافظة</label>
+                        <select id="doctor-governorate" class="form-control" required>
+                            <option value="">اختر المحافظة</option>
+                            <option value="القاهرة">القاهرة</option>
+                            <option value="الجيزة">الجيزة</option>
+                            <option value="الإسكندرية">الإسكندرية</option>
+                            <option value="القليوبية">القليوبية</option>
+                            <option value="المنوفية">المنوفية</option>
+                            <option value="الشرقية">الشرقية</option>
+                            <option value="الغربية">الغربية</option>
+                            <option value="الدقهلية">الدقهلية</option>
+                            <option value="البحيرة">البحيرة</option>
+                            <option value="كفر الشيخ">كفر الشيخ</option>
+                            <option value="دمياط">دمياط</option>
+                            <option value="بورسعيد">بورسعيد</option>
+                            <option value="الإسماعيلية">الإسماعيلية</option>
+                            <option value="السويس">السويس</option>
+                            <option value="مطروح">مطروح</option>
+                            <option value="شمال سيناء">شمال سيناء</option>
+                            <option value="جنوب سيناء">جنوب سيناء</option>
+                            <option value="الفيوم">الفيوم</option>
+                            <option value="بني سويف">بني سويف</option>
+                            <option value="المنيا">المنيا</option>
+                            <option value="أسيوط">أسيوط</option>
+                            <option value="سوهاج">سوهاج</option>
+                            <option value="قنا">قنا</option>
+                            <option value="الأقصر">الأقصر</option>
+                            <option value="أسوان">أسوان</option>
+                            <option value="البحر الأحمر">البحر الأحمر</option>
+                            <option value="الوادي الجديد">الوادي الجديد</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-location">الموقع</label>
+                        <input type="text" id="doctor-location" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-map-link">رابط الخريطة</label>
+                        <input type="url" id="doctor-map-link" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-latitude">خط العرض</label>
+                        <input type="number" step="0.0001" id="doctor-latitude" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-longitude">خط الطول</label>
+                        <input type="number" step="0.0001" id="doctor-longitude" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-price">السعر (جنية)</label>
+                        <input type="number" id="doctor-price" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-rating">التقييم (من 5)</label>
+                        <input type="number" min="0" max="5" step="0.1" id="doctor-rating" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-reviews">عدد التقييمات</label>
+                        <input type="number" id="doctor-reviews" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-image">صورة الطبيب (رابط)</label>
+                        <input type="url" id="doctor-image" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor-description">الوصف</label>
+                        <textarea id="doctor-description" class="form-control" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>مواعيد العمل</label>
+                        <div id="schedule-container">
+                            <div class="schedule-day-item">
+                                <div class="form-group">
+                                    <label>اليوم</label>
+                                    <select class="form-control schedule-day" required>
+                                        <option value="">اختر اليوم</option>
+                                        <option value="الأحد">الأحد</option>
+                                        <option value="الإثنين">الإثنين</option>
+                                        <option value="الثلاثاء">الثلاثاء</option>
+                                        <option value="الأربعاء">الأربعاء</option>
+                                        <option value="الخميس">الخميس</option>
+                                        <option value="الجمعة">الجمعة</option>
+                                        <option value="السبت">السبت</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>من</label>
+                                    <input type="time" class="form-control schedule-from" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>إلى</label>
+                                    <input type="time" class="form-control schedule-to" required>
+                                </div>
+                                <button type="button" class="btn btn-danger remove-schedule" style="margin-top: 25px;">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-schedule" class="btn btn-secondary">
+                            <i class="fas fa-plus"></i> إضافة يوم آخر
+                        </button>
+                    </div>
+                    
+                    <button type="submit" id="submit-btn" class="btn btn-success btn-block">
+                        <i class="fas fa-save"></i> حفظ الطبيب
+                    </button>
+                    <button type="button" id="cancel-btn" class="btn btn-danger btn-block hidden">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </form>
+            </aside>
+            
+            <main class="main-content animate__animated animate__fadeInRight">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list"></i> قائمة الأطباء</h2>
+                        <div>
+                            <button id="refresh-btn" class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i> تحديث البيانات
+                            </button>
+                            <button id="save-all-btn" class="btn btn-success">
+                                <i class="fas fa-save"></i> حفظ جميع التغييرات
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="loading" id="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="doctors-table">
+                                <thead>
+                                    <tr>
+                                        <th>الصورة</th>
+                                        <th>الاسم</th>
+                                        <th>التخصص</th>
+                                        <th>المحافظة</th>
+                                        <th>السعر</th>
+                                        <th>التقييم</th>
+                                        <th>المواعيد</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="doctors-tbody">
+                                    <!-- Doctors will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">تأكيد الإجراء</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                هل أنت متأكد أنك تريد حذف هذا الطبيب؟
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-cancel" class="btn btn-secondary">إلغاء</button>
+                <button id="confirm-action" class="btn btn-danger">تأكيد</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="admin.js">
+      
+    </script>
+</body>
+</html>

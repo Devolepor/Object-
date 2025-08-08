@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .signup-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50%;
+            height: 50%;
+            object-fit: contain;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus, 
+        .input-group select:focus {
+            border-color: #068158;
+            box-shadow: 0 0 0 3px rgba(6, 129, 88, 0.2);
+            outline: none;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: #068158;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #056a4f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 129, 88, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-next {
+            float: left;
+        }
+        
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+            float: right;
+        }
+        
+        .btn-back:hover {
+            background: #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-upload {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-upload-label {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .image-upload-label:hover {
+            border-color: #068158;
+        }
+        
+        .image-upload-label img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .image-upload-label .upload-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #999;
+        }
+        
+        #imageUpload {
+            display: none;
+        }
+        
+        /* نافذة منبثقة للنجاح */
+        .success-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .success-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .success-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #4CAF50;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .checkmark::after {
+            content: "";
+            position: absolute;
+            left: 28px;
+            top: 38px;
+            width: 25px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 5px 5px 0;
+            transform: rotate(45deg);
+        }
+        
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* نافذة الخطأ */
+        .error-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .error-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .error-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #f44336;
+            position: relative;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 3rem;
+            line-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
+        </div>
+        
+        <h1>إنشاء حساب جديد</h1>
+        
+        <!-- الخطوة الأولى -->
+        <div class="step active" id="step1">
+            <div class="input-group">
+                <label for="fullName">الاسم الرباعي</label>
+                <input type="text" id="fullName" placeholder="أدخل الاسم الرباعي" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="phone">رقم الهاتف</label>
+                <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">البريد الإلكتروني (اختياري)</label>
+                <input type="email" id="email" placeholder="أدخل البريد الإلكتروني">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="confirmPassword">تأكيد كلمة المرور</label>
+                <input type="password" id="confirmPassword" placeholder="أعد إدخال كلمة المرور" required>
+            </div>
+            
+            <div class="clearfix">
+                <button class="btn btn-next" onclick="nextStep()">التالي</button>
+                <button class="btn btn-prev" onclick="window.location.href='app.html'">السابق</button>
+            </div>
+        </div>
+        
+        <!-- الخطوة الثانية -->
+        <div class="step" id="step2">
+            <div class="image-upload">
+                <label for="imageUpload" class="image-upload-label">
+                    <img id="previewImage" src="#" alt="Preview">
+                    <div class="upload-icon">+</div>
+                </label>
+                <input type="file" id="imageUpload" accept="image/*">
+            </div>
+            
+            <div class="input-group">
+                <label for="governorate">المحافظة</label>
+                <select id="governorate" required>
+                    <option value="">اختر المحافظة</option>
+                    <option value="القاهرة">القاهرة</option>
+                    <option value="الإسكندرية">الإسكندرية</option>
+                    <option value="الجيزة">الجيزة</option>
+                    <option value="القليوبية">القليوبية</option>
+                    <option value="الشرقية">الشرقية</option>
+                    <option value="الدقهلية">الدقهلية</option>
+                    <option value="الغربية">الغربية</option>
+                    <option value="المنوفية">المنوفية</option>
+                    <option value="البحيرة">البحيرة</option>
+                    <option value="كفر الشيخ">كفر الشيخ</option>
+                    <option value="دمياط">دمياط</option>
+                    <option value="بورسعيد">بورسعيد</option>
+                    <option value="الإسماعيلية">الإسماعيلية</option>
+                    <option value="السويس">السويس</option>
+                    <option value="شمال سيناء">شمال سيناء</option>
+                    <option value="جنوب سيناء">جنوب سيناء</option>
+                    <option value="البحر الأحمر">البحر الأحمر</option>
+                    <option value="الفيوم">الفيوم</option>
+                    <option value="بني سويف">بني سويف</option>
+                    <option value="المنيا">المنيا</option>
+                    <option value="أسيوط">أسيوط</option>
+                    <option value="سوهاج">سوهاج</option>
+                    <option value="قنا">قنا</option>
+                    <option value="الأقصر">الأقصر</option>
+                    <option value="أسوان">أسوان</option>
+                    <option value="الوادي الجديد">الوادي الجديد</option>
+                    <option value="مطروح">مطروح</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="birthDate">تاريخ الميلاد</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            
+            <div class="clearfix">
+                <button class="btn btn-back" onclick="prevStep()">السابق</button>
+                <button class="btn" onclick="submitForm()">إنشاء الحساب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة النجاح المنبثقة -->
+    <div class="success-popup" id="successPopup">
+        <div class="success-content">
+            <div class="checkmark"></div>
+            <h2>تم إنشاء الحساب بنجاح!</h2>
+            <p>جاري تحويلك إلى الصفحة الرئيسية...</p>
+        </div>
+    </div>
+
+    <!-- نافذة الخطأ المنبثقة -->
+    <div class="error-popup" id="errorPopup">
+        <div class="error-content">
+            <div class="error-icon">!</div>
+            <h2 id="errorMessage">حدث خطأ أثناء إنشاء الحساب</h2>
+            <button class="btn" onclick="document.getElementById('errorPopup').classList.remove('active')">حسناً</button>
+        </div>
+    </div>
+
+    <script src="signup.js">
+       
+    </script>
+</body>
+</html>
