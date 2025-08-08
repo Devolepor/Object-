@@ -1,3 +1,32 @@
 {
-  "doctors": []
+  "doctors": [
+    {
+      "id": 1,
+      "name": "سما محمد",
+      "specialty": "النساء والتوليد",
+      "phone": "201123961290",
+      "governorate": "القاهرة",
+      "location": "ميت ابو علي ",
+      "schedule": {
+        "الجمعة": {
+          "available": true,
+          "from": "9:13 م",
+          "to": "8:13 م"
+        },
+        "الثلاثاء": {
+          "available": true,
+          "from": "7:14 م",
+          "to": "12:14 م"
+        }
+      },
+      "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA4QMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAEBQMGAAECB//EAEEQAAIBAwMBBgMFBQcCBwEAAAECAwAEEQUSITEGEyJBUWFxgZEUMqGxwSNCUtHhBxUzYnKC8FOSFiREY4PC0jT/xAAZAQADAQEBAAAAAAAAAAAAAAABAgMEBQD/xAAjEQACAgEEAgMBAQAAAAAAAAAAAQIRAwQSITFBURMiMmEj/9oADAMBAAIRAxEAPwCg3VmzXccqfu8VnaJCt/G7HkqDipZ7mSN4wpzkZqLtAsnfQPIc7l4qbTUkVdNOgzUbf7TNYLkrlc8VY9IEkN5ELg4i2EAmgLWMvdadJjwKPFT25Ec1zEGxsHBxXoddjMVTyxpcsFy6kkACjrJYogVeEp5knyoCKAw9oF2qDbhvvE8VaZ5rSSN1Lrg+1HI1LyGHHgQ37RblSI+HGSahmlI0/Mb4cHGKn1BQqKlqgOevNC2FoWnC3HCkHOTUscm8aTYaip2LdGRLfUlut+5vNaud1fWzJG/LOBnAHNVG30+S21N3jx3WeDmnekNsvFie2eaSQ4Tuhuz7VVy+1IVKKV0RavcT3Kd40OxF6ZqoaSputViheNpZWkEm1Fz4R4h8ieK9iHZE6lGh1F2gTr3a/e+Ht+dMrLs9p2mR9zZW6RJjkgZJ+JPWq48Lbti5MypJHkUHYm91K7e5vpFtI5CWKLyw8zk9BVy0XshYacga3hBfH+K3LH51Y9XMUMIT70e8d5gZJxziu4Ly1klkCCVAhwweJhj54",
+      "mapLink": "https://www.google.com/maps/place/30%C2%B009'23.3%22N+31%C2%B020'39.5%22E/@30.1564643,31.3445021,44m/data=!3m1!1e3!4m4!3m3!8m2!3d30.156471!4d31.344311?authuser=0&entry=ttu&g_ep=EgoyMDI1MDgwNS4wIKXMDSoASAFQAw%3D%3D",
+      "latitude": 0.0011,
+      "longitude": -0.0009,
+      "price": 200,
+      "rating": 3,
+      "reviews": 5,
+      "description": "3قفبق"
+    }
+  ]
 }
