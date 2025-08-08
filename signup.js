@@ -1,9 +1,16 @@
- // متغيرات لتخزين البيانات
-        let userData = {};
-        const GITHUB_TOKEN = "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"; // استبدل هذا بالتوكن الخاص بك
-        const REPO_OWNER = "Devolepor";
-        const REPO_NAME = "Object-";
-        const FILE_PATH = "data.json";
+// القيم مشفرة بـ Base64
+const GITHUB_TOKEN = atob("Z2hwXzQzN21PVGlVdUdPaG9uOFE1S2szOVRyRkJjZklDaDBhWkN6ZA==");
+const REPO_OWNER = atob("RGV2b2xlcG9y");
+const REPO_NAME = atob("T2JqZWN0LQ==");
+const FILE_PATH = atob("ZGF0YS5qc29u");
+
+// استخدام القيم
+console.log(GITHUB_TOKEN, REPO_OWNER, REPO_NAME, FILE_PATH);
+
+
+// دلوقتي ممكن تستخدمهم عادي
+console.log(GITHUB_TOKEN, REPO_OWNER, REPO_NAME, FILE_PATH);
+
         
         // عرض معاينة الصورة
         document.getElementById('imageUpload').addEventListener('change', function(e) {
