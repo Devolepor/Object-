@@ -1,15 +1,3 @@
 {
-  "emergencyServices": [
-    {
-      "id": 1,
-      "name": "الشرطه",
-      "phone": "122",
-      "governorate": "الشرقية",
-      "location": "القاهره",
-      "latitude": 0.00001,
-      "longitude": -0.00001,
-      "description": "ضصفقض",
-      "icon": "fa-police-car"
-    }
-  ]
+  "emergencyServices": []
 }
